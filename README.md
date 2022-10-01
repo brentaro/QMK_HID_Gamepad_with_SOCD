@@ -668,6 +668,7 @@ Can use Steam to use keyboard/gamepad on Steam games and Steam Deck (setup requi
 - [r/OLKB](https://www.reddit.com/r/olkb/)
 - [r/fightsticks](https://www.reddit.com/r/fightsticks/)
 - [Hitbox Cross|Up](https://www.hitboxarcade.com/products/cross-up)
+- [What is SOCD?](https://www.hitboxarcade.com/blogs/support/what-is-socd)
 
 # To Do List
 - Clean up Guide/Formatting
