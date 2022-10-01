@@ -1,5 +1,5 @@
 # QMK_HID_Gamepad_with_SOCD
-QMK Keymap(s) to emulate a Gamepad/All Button Controller with SOCD cleaning. For use with keyboards running QMK firmware.
+QMK Keymap(s) to emulate a Gamepad/All Button Controller with SOCD (Simultaneous Opposing Cardinal Directions) cleaning. For use with keyboards running QMK firmware.
 
 # Features
 - Effectively emulates a Hitbox Cross|Up style controller.
