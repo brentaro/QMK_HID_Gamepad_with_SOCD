@@ -672,5 +672,9 @@ Can use Steam to use keyboard/gamepad on Steam games and Steam Deck (setup requi
 
 # To Do List
 - Clean up Guide/Formatting
-- Add Frame1/b0xx/Smashbox layout
+- Add basic "Hitbox" layout
+- Add "Frame1/b0xx/Smashbox" layout
 - Add sample firmware retaining keyboard functionality
+
+# Known Issues
+- Some games do not register inputs properly when using both dpad and left analog stick (i.e. Melty Blood Type Lumina and JoJo's ASBR). Requires basic "Hitbox" layout.
