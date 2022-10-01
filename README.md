@@ -42,7 +42,9 @@ SOCD: Left + Right = Last Input Wins; Down + Up = Up
 
 ### 1. <ins>Setup the QMK MSYS environment:</ins>
 - Download [QMK MSYS](https://github.com/qmk/qmk_distro_msys/releases/latest).
-- Install, run QMK MSYS 
+- Install and run QMK MSYS
+
+![Screenshot 2022-09-30 200352](https://user-images.githubusercontent.com/99369506/193384158-07bf864e-7e77-4499-a7d9-8ee47a9849af.png)
 - Input `qmk setup` in the terminal window. This will take a few minutes.
 
 ### 2. <ins>Backup your keyboard's original firmware:</ins>
