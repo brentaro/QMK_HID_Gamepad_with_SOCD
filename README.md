@@ -2,8 +2,8 @@
 QMK Keymap(s) to emulate a Gamepad/All Button Controller with SOCD (Simultaneous Opposing Cardinal Directions) cleaning. For use with keyboards running QMK firmware.
 
 # Features
-- Effectively emulates a Hitbox Cross|Up style controller.
-- SOCD Cleaning on DPAD, and both Analog sticks.
+- Effectively emulates an all-button controller.
+- SOCD Cleaning on DPAD and both Analog sticks.
 - Can customize button layout by editing keymap (matrix).
 - Ideal for fighting games and platform fighters.
 - Can utilize third party program (i.e. Steam or x360ce) to emulate Xbox, Playstation, Nintendo controllers.
@@ -16,27 +16,33 @@ QMK Keymap(s) to emulate a Gamepad/All Button Controller with SOCD (Simultaneous
 - QMK Toolbox
 
 # Layouts
-![layout1](https://user-images.githubusercontent.com/99369506/193212571-ce099852-6f4f-4345-be7b-93d21a037ca6.png)
 
-**Layout 1:** Default Layout, ideal for fighting games and most styles.
+**<ins>Note on Default SOCD behavior for ALL layouts</ins>:**
+- **DPAD Behavior**
+  - Up + Down = Up
+  - Left + Right = Neutral
+- **LS and RS behavior**
+  - Up + Down = Up
+  - Left + Right = Last Input Wins
+---
 
-SOCD: Left + Right = Neutral; Down + Up = Up
+![hitbox1](https://user-images.githubusercontent.com/99369506/194227453-bf0bbee1-3570-4bce-a103-d2de0db479dd.png)
+
+**Hitbox Layout 1:** Default Layout, ideal for fighting games and most styles.
 
 ---
 
-![layout2](https://user-images.githubusercontent.com/99369506/193212575-9f0531c5-93eb-492d-91da-7f803a3f87c1.png)
+![hitbox2](https://user-images.githubusercontent.com/99369506/194227479-c70b9ea1-d058-40e8-aba6-d5c53e39e7d2.png)
 
-**Layout 2:** Secondary layout, ideal for fast as possible charge moves.
-
-SOCD: Left + Right = Last Input Wins; Down + Up = Up
+**Hitbox Layout 2:** Same as default Hitbox, but SOCD is Last Input Wins. Ideal for fast as possible charge moves. Refer to TO for tournament legality.
 
 ---
 
 ![layout3](https://user-images.githubusercontent.com/99369506/193212578-a2e78a99-dd1c-422f-873a-54da1e7f4b7b.png)
 
-**Layout 3:** Ideal layout for platform fighters (i.e. Multiversus, Nickelodeon ASB, Rivals of Aether).
+**Gamepad Layout 3:** Ideal layout for platform fighters (i.e. Multiversus, Nickelodeon ASB, Rivals of Aether).
 
-SOCD: Left + Right = Last Input Wins; Down + Up = Up
+---
 
 # Guide (WIP)
 
@@ -107,7 +113,7 @@ JOYSTICK_DRIVER = digital
 
 ### 6. <ins>Edit custom keymap</ins>
 - Open keymap.c in text editor.
-- Edit "enum layers" to following:
+- Declare: Create each layer as an entry in an enum. Input the following.
 <details><summary>enum layers</summary>
 
 ```js
@@ -122,7 +128,7 @@ enum layers {
 ```
 </details>
 
-- Add directly below/after "enum custom_keycodes", Joystick config, and define layer switching.
+- Declare: Create each custom keycode as an entry in an enum; add joystick config; and define key switch keys. Input the following directly below/after layer enum.
 <details><summary>Custom Keycodes</summary>
 
 ```js
@@ -172,7 +178,8 @@ joystick_config_t joystick_axes[JOYSTICK_AXES_COUNT] = {
 ```
 </details>
 
-- **Edit keymap layer matrices:** All keyboard matrices are different. The example matrices correspond with the custom keycodes enumerated earlier. You can customise these layers to your liking.
+- **Define:** Add the keycodes for each layer into the keymaps array(s). 
+- All keyboard matrices are different. You can customise these layers to your liking.
 
 Example layer matrices for Boardsource 5x12:
 <details><summary>Layer Matrices</summary>
@@ -180,11 +187,11 @@ Example layer matrices for Boardsource 5x12:
 ```js
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_GAME1] = LAYOUT_ortho_5x12(
-    GC_HOM,  GC_SEL,  GC_STA,  XXXXXXX, XXXXXXX, GC_L3,   GC_R3,   GC_LSL,  GC_LSD,  GC_LSR,  XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, XXXXXXX, GC_DPU,  XXXXXXX, XXXXXXX, XXXXXXX, GC_SQU,  GC_TRI,  GC_R1,   GC_L1,   XXXXXXX,
+    GC_HOM,  GC_SEL,  GC_STA,  XXXXXXX, XXXXXXX, GC_L3,   GC_R3,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, GC_SQU,  GC_TRI,  GC_R1,   GC_L1,   XXXXXXX,
     XXXXXXX, XXXXXXX, GC_DPL,  GC_DPD,  GC_DPR,  XXXXXXX, XXXXXXX, GC_CRO,  GC_CIR,  GC_R2,   GC_L2,   XXXXXXX,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, FN1,     XXXXXXX, XXXXXXX, XXXXXXX, GC_LSU,  XXXXXXX, XXXXXXX, GC_RSL,  GC_RSD,  GC_RSU,  GC_RSR
+    XXXXXXX, FN1,     XXXXXXX, XXXXXXX, XXXXXXX, GC_DPU,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
   ),
   [_FN1] = LAYOUT_ortho_5x12(
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
@@ -194,11 +201,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, GAME2,   _______, _______, GAME3,   _______, _______, _______, _______
   ),
   [_GAME2] = LAYOUT_ortho_5x12(
-    GC_HOM,  GC_SEL,  GC_STA,  XXXXXXX, XXXXXXX, GC_L3,   GC_R3,   GC_DPL,  GC_DPD,  GC_DPR,  XXXXXXX, XXXXXXX,
-    XXXXXXX, XXXXXXX, XXXXXXX, GC_LSU,  XXXXXXX, XXXXXXX, XXXXXXX, GC_SQU,  GC_TRI,  GC_R1,   GC_L1,   XXXXXXX,
+    GC_HOM,  GC_SEL,  GC_STA,  XXXXXXX, XXXXXXX, GC_L3,   GC_R3,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, GC_SQU,  GC_TRI,  GC_R1,   GC_L1,   XXXXXXX,
     XXXXXXX, XXXXXXX, GC_LSL,  GC_LSD,  GC_LSR,  XXXXXXX, XXXXXXX, GC_CRO,  GC_CIR,  GC_R2,   GC_L2,   XXXXXXX,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    XXXXXXX, FN2,     XXXXXXX, XXXXXXX, XXXXXXX, GC_DPU,  XXXXXXX, XXXXXXX, GC_RSL,  GC_RSD,  GC_RSU,  GC_RSR
+    XXXXXXX, FN2,     XXXXXXX, XXXXXXX, XXXXXXX, GC_LSU,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
   ),
   [_FN2] = LAYOUT_ortho_5x12(
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
@@ -243,46 +250,16 @@ bool DPL_STATE = false;
 bool DPR_STATE = false;
 uint8_t SOCD = 0;
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-	switch (get_highest_layer(state)) {
-		case _GAME1:
-			SOCD = 0;
-			break;
-		case _FN1:
-			SOCD = 0;
-			break;
-		case _GAME2:
-			SOCD = 1;
-			break;
-		case _FN2:
-			SOCD = 1;
-			break;
-		case _GAME3:
-			SOCD = 1;
-			break;
-		case _FN3:
-			SOCD = 1;
-			break;
-	}
-	return state;
-};
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
 		case GC_LSU:
 			if (record->event.pressed) {
 				LSU_STATE = true;
-				if (DPD_STATE) {
-					unregister_joystick_button(16);
-				};
 				joystick_status.axes[1] = -127;
 			} else {
 				LSU_STATE = false;
 				if (LSD_STATE) {
 					joystick_status.axes[1] = 127;
-				} else if (DPD_STATE) {
-					register_joystick_button(16);
-					joystick_status.axes[1] = 0;
 				} else {
 					joystick_status.axes[1] = 0;
 				}
@@ -292,12 +269,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case GC_LSD:
 			if (record->event.pressed) {
 				LSD_STATE = true;
-				if (!(LSU_STATE || DPU_STATE)) {
+				if (!LSU_STATE) {
 					joystick_status.axes[1] = 127;
 				}
 			} else {
 				LSD_STATE = false;	
-				if (!(LSU_STATE || DPU_STATE)) {
+				if (!LSU_STATE) {
 					joystick_status.axes[1] = 0;
 				}	
 			}
@@ -306,28 +283,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case GC_LSL:
 			if (record->event.pressed) {
 				LSL_STATE = true;
-				if (SOCD == 0) {
-					if (LSR_STATE) {
-						joystick_status.axes[0] = 0;
-					} else if (DPR_STATE) {
-						joystick_status.axes[0] = 0;
-						unregister_joystick_button(17);
-					} else {
-						joystick_status.axes[0] = -127;
-					}
-				} else if (SOCD == 1) {
-					if (DPR_STATE) {
-						unregister_joystick_button(17);
-					};
-					joystick_status.axes[0] = -127;
-				}
+				joystick_status.axes[0] = -127;
 			} else {
 				LSL_STATE = false;
 				if (LSR_STATE) {
 					joystick_status.axes[0] = 127;
-				} else if (DPR_STATE) {
-					joystick_status.axes[0] = 0;
-					register_joystick_button(17);
 				} else {
 					joystick_status.axes[0] = 0;
 				}
@@ -337,28 +297,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case GC_LSR:
 			if (record->event.pressed) {
 				LSR_STATE = true;
-				if (SOCD == 0) {
-					if (LSL_STATE) {
-						joystick_status.axes[0] = 0;
-					} else if (DPL_STATE) {
-						unregister_joystick_button(15);
-						joystick_status.axes[0] = 0;
-					} else {
-						joystick_status.axes[0] = 127;
-					}
-				} else if (SOCD == 1) {
-					if (DPL_STATE) {
-						unregister_joystick_button(15);
-					};
-					joystick_status.axes[0] = 127;
-				}
+				joystick_status.axes[0] = 127;
 			} else {
 				LSR_STATE = false;
 				if (LSL_STATE) {
 					joystick_status.axes[0] = -127;
-				} else if (DPL_STATE) {
-					joystick_status.axes[0] = 0;
-					register_joystick_button(15);
 				} else {
 					joystick_status.axes[0] = 0;
 				}
@@ -370,25 +313,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				DPU_STATE = true;
 				if (DPD_STATE) {
 					unregister_joystick_button(16);
-				} else if (LSD_STATE) {
-					joystick_status.axes[1] = 0;
-				};
+				}
 				register_joystick_button(18);
 			} else {
 				DPU_STATE = false;
 				unregister_joystick_button(18);
-				if (DPD_STATE) {
-					register_joystick_button(16);
-				} else if (LSD_STATE) {
-					joystick_status.axes[1] = 127;
-				}
 			}
-			joystick_status.status |= JS_UPDATED;
 			return false;
 		case GC_DPD:
 			if (record->event.pressed) {
 				DPD_STATE = true;
-				if (!(DPU_STATE || LSU_STATE)) {
+				if (!DPU_STATE) {
 					register_joystick_button(16);
 				}
 			} else {
@@ -399,20 +334,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case GC_DPL:
 			if (record->event.pressed) {
 				DPL_STATE = true;
-				if (SOCD == 0) {
-					if (DPR_STATE) {
-						unregister_joystick_button(17);
-					} else if (LSR_STATE) {
-						joystick_status.axes[0] = 0;
-					} else {
-						register_joystick_button(15);
-					}
-				} else if (SOCD == 1) {
-					if (DPR_STATE) {
-						unregister_joystick_button(17);
-					} else if (LSR_STATE) {
-						joystick_status.axes[0] = 0;
-					};
+				if (DPR_STATE) {
+					unregister_joystick_button(17);
+				} else {
 					register_joystick_button(15);
 				}
 			} else {
@@ -420,41 +344,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				unregister_joystick_button(15);
 				if (DPR_STATE) {
 					register_joystick_button(17);
-				} else if (LSR_STATE) {
-					joystick_status.axes[0] = 127;
 				}
 			}
-			joystick_status.status |= JS_UPDATED;
 			return false;
 		case GC_DPR:
 			if (record->event.pressed) {
 				DPR_STATE = true;
-				if (SOCD == 0) {
-					if (DPL_STATE) {
-						unregister_joystick_button(15);
-					} else if (LSL_STATE) {
-						joystick_status.axes[0] = 0;
-					} else {
-						register_joystick_button(17);
-					}
-				} else if (SOCD == 1) {
-					if (DPL_STATE) {
-						unregister_joystick_button(15);
-					} else if (LSL_STATE) {
-						joystick_status.axes[0] = 0;
-					};
+				if (DPL_STATE) {
+					unregister_joystick_button(15);
+				} else {
 					register_joystick_button(17);
 				}
 			} else {
 				DPR_STATE = false;
 				unregister_joystick_button(17);
-				if (DPL_STATE ) {
+				if (DPL_STATE) {
 					register_joystick_button(15);
-				} else if (LSL_STATE) {
-					joystick_status.axes[0] = -127;
 				}
 			}
-			joystick_status.status |= JS_UPDATED;
 			return false;
 		case GC_RSU:
 			if (record->event.pressed) {
@@ -489,11 +396,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case GC_RSL:
 			if (record->event.pressed) {
 				RSL_STATE = true;
-				if (RSR_STATE) {
-					joystick_status.axes[3] = 0;
-				} else {
-					joystick_status.axes[3] = -127;
-				}
+				joystick_status.axes[3] = -127;
 			} else {
 				RSL_STATE = false;
 				if (RSR_STATE) {
@@ -507,11 +410,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case GC_RSR:
 			if (record->event.pressed) {
 				RSR_STATE = true;
-				if (RSL_STATE) {
-					joystick_status.axes[3] = 0;
-				} else {
-					joystick_status.axes[3] = 127;
-				}
+				joystick_status.axes[3] = 127;
 			} else {
 				RSR_STATE = false;
 				if (RSL_STATE) {
@@ -621,7 +520,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 </details>
 
 - Save your keymap.c file.
-  - I'll attach my sample keymap.c file to cross reference.
+  - See attached sample keymap.c file to cross reference.
   
 ### 7. <ins>Compile custom firmware:</ins>
 - In QMK MSYS input the following: (Will take a few minutes and will check for errors)
@@ -641,13 +540,13 @@ qmk compile -km crossup
 
 # Usage
 - To switch layers/layouts:
-  - Hold the FN Key and Press GAME2 or GAME3 key 5 times to switch to the second or third layout.
+  - Hold the FN Key and Press GAME2 or GAME3 key toggle the second or third layout.
 - To return to default layer:
-  - If on second layout: Hold FN Key and Press GAME2 5 times to switch back to default layout.
-  - If on third layout: Hold FN Key and Press GAME3 5 times to switch back to default layout.
+  - If on second layout: Hold FN Key and Press GAME2 to switch back to default layout.
+  - If on third layout: Hold FN Key and Press GAME3 to switch back to default layout.
 
 # Optional
-Can use Steam to use keyboard/gamepad on Steam games and Steam Deck (setup requires Desktop Mode once).
+Can use Steam to use keyboard/gamepad on Steam and Steam Deck (setup requires Desktop Mode once).
 - Instructions:
   - Open Steam (If on Steam Deck, switch to Desktop Mode and open the application)
   - Go to View > Settings
@@ -675,6 +574,3 @@ Can use Steam to use keyboard/gamepad on Steam games and Steam Deck (setup requi
 - Add basic "Hitbox" layout
 - Add "Frame1/b0xx/Smashbox" layout
 - Add sample firmware retaining keyboard functionality
-
-# Known Issues
-- Some games do not register inputs properly when using both dpad and left analog stick (i.e. Melty Blood Type Lumina and JoJo's ASBR). Requires basic "Hitbox" layout.
