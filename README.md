@@ -160,7 +160,7 @@ enum custom_keycodes {
 };
 
 // Joystick Config
-joystick_config_t joystick_axes[JOYSTICK_AXES_COUNT] = {
+joystick_config_t joystick_axes[JOYSTICK_AXIS_COUNT] = {
 	JOYSTICK_AXIS_VIRTUAL,
 	JOYSTICK_AXIS_VIRTUAL,
 	JOYSTICK_AXIS_VIRTUAL,
