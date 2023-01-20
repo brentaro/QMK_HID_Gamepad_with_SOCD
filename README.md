@@ -83,9 +83,8 @@ After inputting keymap name, it will output location of the new keymap. This is 
 <details><summary>Analog Input</summary>
 
 ```js
-# Analog Input
+# Enable Joystick
 JOYSTICK_ENABLE = yes
-JOYSTICK_DRIVER = digital
 ```
 </details>
 
@@ -104,10 +103,10 @@ JOYSTICK_DRIVER = digital
 #define JOYSTICK_BUTTON_COUNT 32
 
 // Joystick Axes Count
-#define JOYSTICK_AXES_COUNT 6
+#define JOYSTICK_AXIS_COUNT 6
 
 // Joystick Axes Resolution
-#define JOYSTICK_AXES_RESOLUTION 8
+#define JOYSTICK_AXIS_RESOLUTION 8
 ```
 </details>
 
@@ -162,16 +161,16 @@ enum custom_keycodes {
 
 // Joystick Config
 joystick_config_t joystick_axes[JOYSTICK_AXES_COUNT] = {
-	[0] = JOYSTICK_AXIS_VIRTUAL,
-	[1] = JOYSTICK_AXIS_VIRTUAL,
-	[2] = JOYSTICK_AXIS_VIRTUAL,
-	[3] = JOYSTICK_AXIS_VIRTUAL,
-	[4] = JOYSTICK_AXIS_VIRTUAL,
-	[5] = JOYSTICK_AXIS_VIRTUAL,
+	JOYSTICK_AXIS_VIRTUAL,
+	JOYSTICK_AXIS_VIRTUAL,
+	JOYSTICK_AXIS_VIRTUAL,
+	JOYSTICK_AXIS_VIRTUAL,
+	JOYSTICK_AXIS_VIRTUAL,
+	JOYSTICK_AXIS_VIRTUAL,
 };
 
-#define GAME2   TT(_GAME2)
-#define GAME3   TT(_GAME3)
+#define GAME2   TG(_GAME2)
+#define GAME3   TG(_GAME3)
 #define FN1		MO(_FN1)
 #define FN2		MO(_FN2)
 #define FN3		MO(_FN3)
@@ -248,65 +247,60 @@ bool DPU_STATE = false;
 bool DPD_STATE = false;
 bool DPL_STATE = false;
 bool DPR_STATE = false;
-uint8_t SOCD = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
 		case GC_LSU:
 			if (record->event.pressed) {
 				LSU_STATE = true;
-				joystick_status.axes[1] = -127;
+				joystick_set_axis(1, -127);
 			} else {
 				LSU_STATE = false;
 				if (LSD_STATE) {
-					joystick_status.axes[1] = 127;
+					joystick_set_axis(1, 127);
 				} else {
-					joystick_status.axes[1] = 0;
+					joystick_set_axis(1, 0);
 				}
 			}
-			joystick_status.status |= JS_UPDATED;
 			return false;
 		case GC_LSD:
 			if (record->event.pressed) {
 				LSD_STATE = true;
 				if (!LSU_STATE) {
-					joystick_status.axes[1] = 127;
+					joystick_set_axis(1, 127);
 				}
 			} else {
 				LSD_STATE = false;	
 				if (!LSU_STATE) {
-					joystick_status.axes[1] = 0;
+					joystick_set_axis(1, 0);
 				}	
 			}
-			joystick_status.status |= JS_UPDATED;
 			return false;
 		case GC_LSL:
 			if (record->event.pressed) {
 				LSL_STATE = true;
-				joystick_status.axes[0] = -127;
+				joystick_set_axis(0, -127);
 			} else {
 				LSL_STATE = false;
 				if (LSR_STATE) {
-					joystick_status.axes[0] = 127;
+					joystick_set_axis(0, 127);
 				} else {
-					joystick_status.axes[0] = 0;
+					joystick_set_axis(0, 0);
 				}
 			}
-			joystick_status.status |= JS_UPDATED;
 			return false;
 		case GC_LSR:
 			if (record->event.pressed) {
 				LSR_STATE = true;
-				joystick_status.axes[0] = 127;
+				joystick_set_axis(0, 127);
 			} else {
 				LSR_STATE = false;
 				if (LSL_STATE) {
-					joystick_status.axes[0] = -127;
+					joystick_set_axis(0, -127);
 				} else {
-					joystick_status.axes[0] = 0;
+					joystick_set_axis(0, 0);
 				}
 			}
-			joystick_status.status |= JS_UPDATED;
 			return false;
 		case GC_DPU:
 			if (record->event.pressed) {
@@ -366,60 +360,56 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case GC_RSU:
 			if (record->event.pressed) {
 				RSU_STATE = true;
-				joystick_status.axes[4] = -127;
+				joystick_set_axis(4, -127);
 			} else {
 				RSU_STATE = false;
 				if (RSD_STATE) {
-					joystick_status.axes[4] = 127;
+					joystick_set_axis(4, 127);
 				} else {
-					joystick_status.axes[4] = 0;
+					joystick_set_axis(4, 0);
 				}
 			}
-			joystick_status.status |= JS_UPDATED;
 			return false;
 		case GC_RSD:
 			if (record->event.pressed) {
 				RSD_STATE = true;
 				if (!RSU_STATE) {
-					joystick_status.axes[4] = 127;
+					joystick_set_axis(4, 127);
 				}
 			} else {
 				RSD_STATE = false;
 				if (RSU_STATE) {
-					joystick_status.axes[4] = -127;
+					joystick_set_axis(4, -127);
 				} else {
-					joystick_status.axes[4] = 0;
+					joystick_set_axis(4, 0);
 				}
 			}
-			joystick_status.status |= JS_UPDATED;
 			return false;
 		case GC_RSL:
 			if (record->event.pressed) {
 				RSL_STATE = true;
-				joystick_status.axes[3] = -127;
+				joystick_set_axis(3, -127);
 			} else {
 				RSL_STATE = false;
 				if (RSR_STATE) {
-					joystick_status.axes[3] = 127;
+					joystick_set_axis(3, 127);
 				} else {
-					joystick_status.axes[3] = 0;
+					joystick_set_axis(3, 0);
 				}
 			}
-			joystick_status.status |= JS_UPDATED;
 			return false;
 		case GC_RSR:
 			if (record->event.pressed) {
 				RSR_STATE = true;
-				joystick_status.axes[3] = 127;
+				joystick_set_axis(3, 127);
 			} else {
 				RSR_STATE = false;
 				if (RSL_STATE) {
-					joystick_status.axes[3] = -127;
+					joystick_set_axis(3, -127);
 				} else {
-					joystick_status.axes[3] = 0;
+					joystick_set_axis(3, 0);
 				}
 			}
-			joystick_status.status |= JS_UPDATED;
 			return false;
 		case GC_SQU:
 			if (record->event.pressed) {
