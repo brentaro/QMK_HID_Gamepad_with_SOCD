@@ -6,7 +6,7 @@
 #define JOYSTICK_BUTTON_COUNT 32
 
 // Joystick Axes Count
-#define JOYSTICK_AXES_COUNT 6
+#define JOYSTICK_AXIS_COUNT 6
 
 // Joystick Axes Resolution
-#define JOYSTICK_AXES_RESOLUTION 8
+#define JOYSTICK_AXIS_RESOLUTION 8
