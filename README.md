@@ -553,6 +553,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 					joystick_set_axis(1, 0);
 				} else {
 					joystick_set_axis(1, 127);
+				}
 			} else {
 				LSD_STATE = false;	
 				if (LSU_STATE) {
