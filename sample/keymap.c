@@ -246,7 +246,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 				if (RSU_STATE) {
 					joystick_set_axis(4, -127);
 				} else {
-					joystick_set_axis(4. 0);
+					joystick_set_axis(4, 0);
 				}
 			}
 			return false;
